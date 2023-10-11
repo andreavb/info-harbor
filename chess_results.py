@@ -58,6 +58,27 @@ def extract_tournament_details_from_table(table_rows):
     return links_to_save
 
 
+def extract_players_from_table(table_rows):
+
+    players = []
+
+    # Iterate through the rows and extract data
+    for row in table_rows:
+        columns = row.find_all("td")
+        player = {}
+        player["id"] = columns[4].text.strip()
+        player["name"] = columns[2].text.strip()
+        player["rtg"] = columns[5].text.strip()
+
+        if player["rtg"] is None or player["rtg"] == "0":
+            print("SKIPPING PLAYER: %s does not have FIDE ID and/or rating" % player["name"])
+        else:
+            print("ADDING PLAYER: %s %s %s" %(player["id"], player["name"], player["rtg"]))
+            players.append(player)
+
+    return players
+
+
 def save_links_to_file(filepath, links_to_save):
 
     # Save the links to a file
@@ -170,3 +191,22 @@ def parse_main_page(player_id, tournaments_filepath):
     # Save links to file
     save_links_to_file(tournaments_filepath, list_of_links)
 
+
+def parse_tournament_page(tournament_id):
+
+    cr_link = "https://chess-results.com/tnr%s.aspx?lan=1" %tournament_id
+    tournament_driver = setup_chrome_driver()
+    tournament_driver.get(cr_link)
+    tournament_source = tournament_driver.page_source
+    tournament_driver.quit()
+
+    # Parse the results
+    soup = BeautifulSoup(tournament_source, 'html.parser')
+
+    # Find all players
+    tournament_players_rows = soup.find_all("tr", class_=["CRng1 BRA", "CRng2 BRA"])
+
+    # Extract and print data
+    list_of_players = extract_players_from_table(tournament_players_rows)
+
+    return list_of_players
