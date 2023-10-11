@@ -67,6 +67,8 @@ def is_game_relevant(str_pgn_game, player, color):
         return True
     if color == "black" and all(name in black_name for name in player.split(" ")):
         return True
+    if color == "all" and ((all(name in white_name for name in player.split(" "))) or (all(name in black_name for name in player.split(" ")))):
+        return True
     return False
 
 
