@@ -17,15 +17,7 @@ def collect_player_data():
     return player
 
 
-def main():
-
-    if len(sys.argv) != 4:
-        player = collect_player_data()
-    else:
-        player = {'id': sys.argv[1],
-              'name': sys.argv[2],
-              'color': sys.argv[3]
-            }
+def player_finder(player):
 
     # some house keeping
     tournaments_filepath = "tournaments.txt"
@@ -44,6 +36,19 @@ def main():
 
     # step 4: generate CSV file to be used within Elastic Stack
     generate_games_csv(final_games_file, csv_file)
+
+
+def main():
+
+    if len(sys.argv) != 4:
+        player = collect_player_data()
+    else:
+        player = {'id': sys.argv[1],
+              'name': sys.argv[2],
+              'color': sys.argv[3]
+            }
+
+    player_finder(player)
 
 
 if __name__ == "__main__":
