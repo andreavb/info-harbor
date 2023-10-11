@@ -1,3 +1,5 @@
+import sys
+
 import chess.pgn
 
 from chess_results import download_all_pgns, parse_main_page
@@ -17,7 +19,13 @@ def collect_player_data():
 
 def main():
 
-    player = collect_player_data()
+    if len(sys.argv) != 4:
+        player = collect_player_data()
+    else:
+        player = {'id': sys.argv[1],
+              'name': sys.argv[2],
+              'color': sys.argv[3]
+            }
 
     # some house keeping
     tournaments_filepath = "tournaments.txt"
