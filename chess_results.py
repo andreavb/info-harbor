@@ -113,13 +113,12 @@ def scrap_page(driver, url, player_id):
     return page_source
 
 
-def get_tournament_details(link):
+def get_tournament_details(link, tournament_driver):
     cr_link = "https://chess-results.com/" + link
     print("Getting details for: %s" % link)
     expected_file_name =  link.split('.')[0][3:] + ".pgn"
 
     # set up the Chrome driver
-    tournament_driver = setup_chrome_driver()
     tournament_driver.get(cr_link)
     tournament_source = tournament_driver.page_source
 
@@ -143,9 +142,6 @@ def get_tournament_details(link):
 
     print("--------")
 
-    # this is the right time to quit the driver. DO NOT change this line as downloads will fail!
-    tournament_driver.quit()
-
 
 def download_pgn(games_link, expected_file_name):
 
@@ -163,13 +159,21 @@ def download_pgn(games_link, expected_file_name):
 
 
 def download_all_pgns(tournaments_filepath):
+    batch_size = 5
     with open(tournaments_filepath, "r") as file:
         links = file.readlines()
 
     cleaned_links = [link.strip() for link in links]
 
-    for link in cleaned_links:
-        get_tournament_details(link)
+    batch_driver = setup_chrome_driver()
+
+    for i in range(0, len(cleaned_links), batch_size):
+        batch_links = cleaned_links[i:i + batch_size]
+
+        for link in batch_links:
+            get_tournament_details(link, batch_driver)
+
+    batch_driver.quit()
 
 
 def parse_main_page(player_id, tournaments_filepath):
