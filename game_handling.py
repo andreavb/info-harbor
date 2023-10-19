@@ -63,11 +63,13 @@ def is_game_relevant(str_pgn_game, player, color):
     white_name = headers.get("White", "")
     black_name = headers.get("Black", "")
 
-    if color == "white" and all(name in white_name for name in player.split(" ")):
+    player_names = set(player.split(" "))
+
+    if color == "white" and all(name in white_name for name in player_names):
         return True
-    if color == "black" and all(name in black_name for name in player.split(" ")):
+    if color == "black" and all(name in black_name for name in player_names):
         return True
-    if color == "all" and ((all(name in white_name for name in player.split(" "))) or (all(name in black_name for name in player.split(" ")))):
+    if color == "all" and (all(name in white_name for name in player_names) or all(name in black_name for name in player_names)):
         return True
     return False
 
