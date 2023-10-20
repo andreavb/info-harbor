@@ -1,3 +1,5 @@
+import concurrent.futures
+
 import sys
 
 import chess.pgn
@@ -16,9 +18,16 @@ def tournament_scraper(tournament_id):
     players = parse_tournament_page(tournament_id)
     for player in players:
         player["color"] = "all"
-        print(player)
-        player_finder(player)
 
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [executor.submit(player_finder, player) for player in players]
+
+    for future in concurrent.futures.as_completed(futures):
+        try:
+            result = future.result()
+            print(result)
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
 def main():
 
