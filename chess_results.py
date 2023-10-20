@@ -1,5 +1,6 @@
 import os
 import re
+import concurrent.futures
 
 import chess.pgn
 
@@ -158,22 +159,22 @@ def download_pgn(games_link, expected_file_name):
     games_driver.quit()
 
 
+def download_tournament_details(link):
+    # Create a new driver for each thread or process
+    driver = setup_chrome_driver()
+    get_tournament_details(link, driver)
+    driver.quit()
+
 def download_all_pgns(tournaments_filepath):
-    batch_size = 5
     with open(tournaments_filepath, "r") as file:
         links = file.readlines()
 
     cleaned_links = [link.strip() for link in links]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        futures = [executor.submit(download_tournament_details, link) for link in cleaned_links]
 
-    batch_driver = setup_chrome_driver()
-
-    for i in range(0, len(cleaned_links), batch_size):
-        batch_links = cleaned_links[i:i + batch_size]
-
-        for link in batch_links:
-            get_tournament_details(link, batch_driver)
-
-    batch_driver.quit()
+    # Wait for all tasks to complete
+    concurrent.futures.wait(futures, return_when=concurrent.futures.ALL_COMPLETED)
 
 
 def parse_main_page(player_id, tournaments_filepath):
