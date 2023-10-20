@@ -118,6 +118,8 @@ def get_tournament_details(link, tournament_driver):
     cr_link = "https://chess-results.com/" + link
     print("Getting details for: %s" % link)
     expected_file_name =  link.split('.')[0][3:] + ".pgn"
+    if expected_file_name in os.listdir(download_dir):
+        return
 
     # set up the Chrome driver
     tournament_driver.get(cr_link)
@@ -139,6 +141,7 @@ def get_tournament_details(link, tournament_driver):
         download_pgn(games_link, expected_file_name)
 
     else:
+        open(download_dir + "/" + expected_file_name, 'a').close()
         print("No games found here")
 
     print("--------")
