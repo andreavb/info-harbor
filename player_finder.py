@@ -20,7 +20,7 @@ def collect_player_data():
 def player_finder(player):
 
     # some house keeping
-    tournaments_filepath = "tournaments.txt"
+    tournaments_filepath = "current_tournaments.txt"
     final_games_file = player['id'] + "_" + player['color'] + ".pgn"
     csv_file = final_games_file.replace('pgn', 'csv')
     elasticsearch_index_name = csv_file.replace('.csv', '').lower()
@@ -32,7 +32,7 @@ def player_finder(player):
     download_all_pgns(tournaments_filepath)
 
     # step 3: select only relevant games and concat them in a single file
-    refine_games(player['name'], player['color'], final_games_file)
+    refine_games(player, final_games_file)
 
     # step 4: generate CSV file to be used within Elastic Stack
     generate_games_csv(final_games_file, csv_file)
