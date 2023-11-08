@@ -54,7 +54,6 @@ def generate_games_csv(input_pgn_file, csv_file):
             black_rating = headers.get("BlackElo", "")
             result = headers.get("Result", "")
             eco = headers.get("ECO", "")
-            datetime = headers.get("ÜTCTime", "")
 
             writer.writerow(
                 [
