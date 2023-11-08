@@ -193,7 +193,6 @@ def download_all_pgns(tournaments_filepath):
 
 
 def parse_main_page(player_id, tournaments_filepath):
-
     # Setup driver, scrap the page, let the driver go
     chess_results_driver = setup_chrome_driver()
     tournaments_played_source = scrap_page(
