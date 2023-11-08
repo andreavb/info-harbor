@@ -7,12 +7,11 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 
-
 main_chess_results_url = "https://chess-results.com/SpielerSuche.aspx?lan=1"
 download_dir = "/tmp/games"
 
-def setup_chrome_driver():
 
+def setup_chrome_driver():
     if not os.path.exists(download_dir):
         os.makedirs(download_dir)
 
@@ -32,7 +31,6 @@ def setup_chrome_driver():
 
 
 def extract_tournament_details_from_table(table_rows):
-
     links_to_save = []
 
     # Iterate through the rows and extract data
@@ -55,7 +53,6 @@ def extract_tournament_details_from_table(table_rows):
 
 
 def extract_players_from_table(table_rows):
-
     players = []
 
     # Iterate through the rows and extract data
@@ -76,7 +73,6 @@ def extract_players_from_table(table_rows):
 
 
 def save_links_to_file(filepath, links_to_save):
-
     # Save the links to a file
     with open(filepath, "w") as file:
         for link in links_to_save:
@@ -84,7 +80,6 @@ def save_links_to_file(filepath, links_to_save):
 
 
 def search_player_in_form(driver, keyword):
-
     # Find the search input field by ID and enter the FIDE ID
     search_box = driver.find_element("id", "P1_txt_fideID")
     search_box.send_keys(keyword)
@@ -143,8 +138,7 @@ def get_tournament_details(link, tournament_driver):
 
 
 def download_pgn(games_link, expected_file_name):
-
-   # get link to downloadable games
+    # get link to downloadable games
     games_driver = setup_chrome_driver()
     games_driver.get(games_link)
     download_pgn_button = games_driver.find_element("id", "P1_cb_DownLoadPGN")
@@ -162,6 +156,7 @@ def download_tournament_details(link):
     driver = setup_chrome_driver()
     get_tournament_details(link, driver)
     driver.quit()
+
 
 def download_all_pgns(tournaments_filepath):
     with open(tournaments_filepath, "r") as file:
