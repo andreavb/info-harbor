@@ -3,6 +3,7 @@ import sys
 from chess_results import download_all_pgns, parse_main_page
 from game_handling import generate_games_csv, refine_games
 
+
 def collect_player_data():
     player = {"id": "", "name": "", "color": ""}
 
