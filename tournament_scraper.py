@@ -6,8 +6,7 @@ from player_finder import player_finder
 
 
 def collect_tournament_data():
-
-    tournament_id  = input("What is the Chess Results Tournament ID? ")
+    tournament_id = input("What is the Chess Results Tournament ID? ")
     return tournament_id
 
 
