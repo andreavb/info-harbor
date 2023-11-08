@@ -8,11 +8,11 @@ import chess.pgn
 
 def concatenate_all_games(directory_path, output_file):
     try:
-        with open(output_file, 'w') as outfile:
+        with open(output_file, "w") as outfile:
             for filename in os.listdir(directory_path):
-                if filename.endswith('.pgn'):
+                if filename.endswith(".pgn"):
                     file_path = os.path.join(directory_path, filename)
-                    with open(file_path, 'r') as infile:
+                    with open(file_path, "r") as infile:
                         outfile.write(infile.read())
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -78,7 +78,7 @@ def refine_games(player, refined_games_file):
 
     # first, we concatenate all games within a single file
     directory_path = "/tmp/games"
-    all_games_file = player['id'] + "_all_games.pgn"
+    all_games_file = player["id"] + "_all_games.pgn"
 
     concatenate_all_games(directory_path, all_games_file)
 
@@ -86,18 +86,18 @@ def refine_games(player, refined_games_file):
     # PROFIT
 
     # read input PGN file
-    with open(all_games_file, 'r') as input_file:
+    with open(all_games_file, "r") as input_file:
         all_games = input_file.read()
 
     # separate games
-    games = re.split(r'\n(?=\[Event  *)', all_games)
+    games = re.split(r"\n(?=\[Event  *)", all_games)
 
     # filter relevant games
     relevant_games = list(filter(lambda game: is_game_relevant(game, player['name'], player['color']), games))
 
     # write output PGN file
-    with open(refined_games_file, 'w') as output_file:
-        output_file.write('\n'.join(relevant_games))
+    with open(refined_games_file, "w") as output_file:
+        output_file.write("\n".join(relevant_games))
 
     # remove *_all_games.pgn file as no longer needed
     os.remove(all_games_file)
