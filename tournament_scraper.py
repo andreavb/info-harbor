@@ -29,7 +29,6 @@ def tournament_scraper(tournament_id):
 
 
 def main():
-
     if len(sys.argv) != 2:
         tournament_id = collect_tournament_data()
     else:
