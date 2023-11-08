@@ -16,7 +16,6 @@ def collect_player_data():
 
 
 def player_finder(player):
-
     # some house keeping
     tournaments_filepath = "current_tournaments.txt"
     final_games_file = player["id"] + "_" + player["color"] + ".pgn"
