@@ -94,7 +94,6 @@ def is_game_relevant(str_pgn_game, player, color):
 
 
 def refine_games(player, refined_games_file):
-
     # first, we concatenate all games within a single file
     directory_path = "/tmp/games"
     all_games_file = player["id"] + "_all_games.pgn"
@@ -127,4 +126,3 @@ def refine_games(player, refined_games_file):
 
     # remove *_all_games.pgn file as no longer needed
     os.remove(all_games_file)
-
