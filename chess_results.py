@@ -41,7 +41,6 @@ def extract_tournament_details_from_table(table_rows):
         columns = row.find_all("td")
         tournament = columns[5].text.strip()
         end_date = columns[6].text.strip()
-        number = columns[9].text.strip()
 
         # Extract the href value
         link = (columns[0].find("a")["href"]).split("?")[0]
