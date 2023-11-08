@@ -45,7 +45,7 @@ def generate_games_csv(input_pgn_file, csv_file):
             game = chess.pgn.read_game(pgn)
             if game is None:
                 break
-        
+
             headers = game.headers
             event = headers.get("Event", "")
             white_name = headers.get("White", "")
