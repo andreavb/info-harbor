@@ -27,6 +27,7 @@ def tournament_scraper(tournament_id):
         except Exception as e:
             print(f"An error occurred: {e}")
 
+
 def main():
 
     if len(sys.argv) != 2:
