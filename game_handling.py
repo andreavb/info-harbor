@@ -19,9 +19,6 @@ def concatenate_all_games(directory_path, output_file):
 
 
 def generate_games_csv(input_pgn_file, csv_file):
-
-    str_output = ''
-    
     # Open the PGN file and parse games
     with open(input_pgn_file, "r") as f:
         game_data = f.read()
