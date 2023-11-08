@@ -1,10 +1,7 @@
 import concurrent.futures
-
 import sys
 
-import chess.pgn
-
-from chess_results import download_all_pgns, parse_tournament_page
+from chess_results import parse_tournament_page
 from player_finder import player_finder
 
 

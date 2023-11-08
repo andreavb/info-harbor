@@ -1,7 +1,5 @@
 import sys
 
-import chess.pgn
-
 from chess_results import download_all_pgns, parse_main_page
 from game_handling import generate_games_csv, refine_games
 
