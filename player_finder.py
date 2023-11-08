@@ -37,7 +37,6 @@ def player_finder(player):
 
 
 def main():
-
     if len(sys.argv) != 4:
         player = collect_player_data()
     else:
@@ -48,4 +47,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
