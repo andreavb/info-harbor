@@ -32,7 +32,17 @@ def generate_games_csv(input_pgn_file, csv_file):
 
     with open(csv_file, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["event", "white_name", "black_name", "white_rating", "black_rating", "result", "eco"])
+        writer.writerow(
+            [
+                "event",
+                "white_name",
+                "black_name",
+                "white_rating",
+                "black_rating",
+                "result",
+                "eco",
+            ]
+        )
 
         while True:
             game = chess.pgn.read_game(pgn)
@@ -49,7 +59,17 @@ def generate_games_csv(input_pgn_file, csv_file):
             eco = headers.get("ECO", "")
             datetime = headers.get("ÜTCTime", "")
 
-            writer.writerow([event, white_name, black_name, white_rating, black_rating, result, eco])
+            writer.writerow(
+                [
+                    event,
+                    white_name,
+                    black_name,
+                    white_rating,
+                    black_rating,
+                    result,
+                    eco,
+                ]
+            )
 
 
 def is_game_relevant(str_pgn_game, player, color):
@@ -69,7 +89,10 @@ def is_game_relevant(str_pgn_game, player, color):
         return True
     if color == "black" and all(name in black_name for name in player_names):
         return True
-    if color == "all" and (all(name in white_name for name in player_names) or all(name in black_name for name in player_names)):
+    if color == "all" and (
+        all(name in white_name for name in player_names)
+        or all(name in black_name for name in player_names)
+    ):
         return True
     return False
 
@@ -93,7 +116,14 @@ def refine_games(player, refined_games_file):
     games = re.split(r"\n(?=\[Event  *)", all_games)
 
     # filter relevant games
-    relevant_games = list(filter(lambda game: is_game_relevant(game, player['name'], player['color']), games))
+    relevant_games = list(
+        filter(
+            lambda game: is_game_relevant(
+                game, player["name"], player["color"]
+            ),
+            games,
+        )
+    )
 
     # write output PGN file
     with open(refined_games_file, "w") as output_file:

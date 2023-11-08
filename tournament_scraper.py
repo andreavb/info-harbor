@@ -17,7 +17,9 @@ def tournament_scraper(tournament_id):
         player["color"] = "all"
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = [executor.submit(player_finder, player) for player in players]
+        futures = [
+            executor.submit(player_finder, player) for player in players
+        ]
 
     for future in concurrent.futures.as_completed(futures):
         try:
