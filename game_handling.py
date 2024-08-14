@@ -31,9 +31,10 @@ def generate_games_csv(input_pgn_file, csv_file):
     # Extract and write data to CSV
 
     with open(csv_file, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["event", "white_name", "black_name", "white_rating", "black_rating", "result", "eco"])
+        writer = csv.writer(f, delimiter='|')
+        writer.writerow(["id", "white_name", "black_name", "white_rating", "black_rating", "result", "eco"])
 
+        game_id=1
         while True:
             game = chess.pgn.read_game(pgn)
             if game is None:
@@ -47,9 +48,10 @@ def generate_games_csv(input_pgn_file, csv_file):
             black_rating = headers.get("BlackElo", "")
             result = headers.get("Result", "")
             eco = headers.get("ECO", "")
-            datetime = headers.get("ÜTCTime", "")
+            datetime = headers.get("UTCTime", "")
 
-            writer.writerow([event, white_name, black_name, white_rating, black_rating, result, eco])
+            writer.writerow([game_id, white_name, black_name, white_rating, black_rating, result, eco])
+            game_id += 1
 
 
 def is_game_relevant(str_pgn_game, player, color):
